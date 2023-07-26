@@ -1,0 +1,16 @@
+files:
+  - filter:
+    - dist/**/*
+    - package.json
+
+extraResources:
+  - from: assets
+    to: assets
+
+mac:
+  artifactName: QuickSwitcher.${ext}
+  icon: 'assets/mac/icon.icns'
+  entitlements: assets/mac/entitlements.plist
+  target:
+    - target: dmg
+      arch: universal

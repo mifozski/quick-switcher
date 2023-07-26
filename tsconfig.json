@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "noImplicitAny": true,
+    "sourceMap": true,
+    "esModuleInterop": true,
+    "strictNullChecks": true,
+    "target": "ESNext",
+    "outDir": "dist",
+    "baseUrl": ".",
+    "paths": {
+      "*": ["node_modules/*"],
+      "src/*": ["src/*"],
+    }
+  },
+  "include": [
+    "src/**/*"
+  ]
+}

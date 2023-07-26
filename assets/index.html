@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Quick Switcher!</title>
+    <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'unsafe-inline'"
+    />
+    <meta
+      http-equiv="X-Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'"
+    />
+    <style>
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+        background-color: whitesmoke;
+        padding: 8px;
+        margin: 0;
+        width: 200px;
+      }
+      .dropdown-item {
+        color: #a8a8a8;
+      }
+      .dropdown-item .highlight {
+        color: #6663EE;
+        font-weight: bold;
+      }
+      .dropdown-item.selected {
+        background-color: powderblue;
+        color: #585858;
+      }
+      </style>
+  </head>
+  <body>
+    <input id="input" placeholder="Type anything" autofocus />
+    <div id="dropdown">
+    </div>
+    <script>var exports = {};
+</script>
+    <script src="./../dist/renderer.js"></script>
+  </body>
+</html>
