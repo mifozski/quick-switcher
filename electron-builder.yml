@@ -7,6 +7,9 @@ extraResources:
   - from: assets
     to: assets
 
+directories:
+  buildResources: assets
+
 mac:
   artifactName: QuickSwitcher.${ext}
   icon: 'assets/mac/icon.icns'

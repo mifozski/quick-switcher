@@ -4,5 +4,11 @@
     "editor.codeActionsOnSave": {
       "source.fixAll.eslint": true
     },
-    "eslint.validate": ["javascript", "typescript", "html", "json"],
+    "eslint.validate": [
+      "javascript",
+      "typescript",
+      "html",
+      "json"
+    ],
+    "files.eol": "\n",
 }

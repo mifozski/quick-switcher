@@ -2,13 +2,16 @@ import {
     BrowserWindow,
     globalShortcut,
     ipcMain,
-    screen,
     shell,
+    screen,
 } from 'electron';
 import path from 'path';
 
 import { TrayController } from 'src/Tray/TrayController';
 import { ConfigSchema } from 'src/main';
+
+import { logger } from '../logger';
+import { getResourcePath } from '../paths';
 
 export class Switcher {
     private switcherWindow: BrowserWindow | null;
@@ -20,7 +23,6 @@ export class Switcher {
         private trayController: TrayController,
         private config: ConfigSchema[]
     ) {
-        console.log('SwitcherController');
         this.switcherWindow = null;
     }
 
@@ -30,6 +32,7 @@ export class Switcher {
             registered = globalShortcut.register(
                 'CommandOrControl+Shift+J',
                 () => {
+                    logger.info('Triggering switcher');
                     if (
                         !this.switcherWindow ||
                         !this.switcherWindow.isVisible()
@@ -41,13 +44,13 @@ export class Switcher {
                 }
             );
         } catch (e) {
-            console.error('Error while registering global shortcut:', e);
+            logger.error('Error while registering global shortcut:', e);
         }
 
         if (!registered) {
-            console.log('Failed to register global shortcut');
+            logger.info('Failed to register global shortcut');
         } else {
-            console.log('Registered global shortcut');
+            logger.info('Registered global shortcut');
         }
     }
 
@@ -56,6 +59,8 @@ export class Switcher {
             this.switcherWindow = this.createWindow();
         }
 
+        logger.info('Showing switcher');
+
         this.alignWindow();
 
         this.switcherWindow.show();
@@ -63,7 +68,6 @@ export class Switcher {
 
     createWindow(): BrowserWindow {
         this.switcherWindow = new BrowserWindow({
-            // height: 600,
             width: 200,
             minWidth: 200,
             webPreferences: {
@@ -75,6 +79,8 @@ export class Switcher {
             transparent: true,
         });
 
+        logger.info('config:', this.config);
+
         const links = this.config.map((config) => {
             return {
                 url: config.url,
@@ -83,6 +89,7 @@ export class Switcher {
         });
 
         ipcMain.on('ready', () => {
+            logger.info('Switcher ready');
             this.switcherWindow?.webContents.send('links', links);
         });
 
@@ -92,6 +99,7 @@ export class Switcher {
         });
 
         ipcMain.on('size-changed', (event, size) => {
+            logger.info('Size changed:', size);
             this.switcherWindow?.setSize(
                 Math.floor(size.width),
                 Math.floor(size.height)
@@ -100,7 +108,7 @@ export class Switcher {
         });
 
         this.switcherWindow.loadFile(
-            path.join(__dirname, '../../assets/index.html')
+            path.join(getResourcePath(), 'index.html')
         );
 
         this.switcherWindow.webContents.send('links', links);
@@ -121,25 +129,22 @@ export class Switcher {
             x: position.x,
             y: position.y,
         });
+
+        logger.info('set positition:', this.switcherWindow.getBounds());
     }
 
     calculateWindowPosition(): { x: number; y: number } {
         const screenBounds = screen.getPrimaryDisplay().size;
         const trayBounds = this.trayController.tray.getBounds();
-
         let trayPos = 4;
         trayPos =
             trayBounds.y > screenBounds.height / 2 ? trayPos : trayPos / 2;
         trayPos = trayBounds.x > screenBounds.width / 2 ? trayPos : trayPos - 1;
-
         const margin_x = 0;
         const margin_y = 0;
         const DEFAULT_MARGIN = { x: margin_x, y: margin_y };
-
         let x = 0;
         let y = 0;
-
-        //calculate the new window position
         switch (trayPos) {
             case 1:
                 x = Math.floor(
@@ -149,7 +154,6 @@ export class Switcher {
                     trayBounds.y + DEFAULT_MARGIN.y + trayBounds.height / 2
                 );
                 break;
-
             case 2:
                 x = Math.floor(
                     trayBounds.x -
@@ -161,7 +165,6 @@ export class Switcher {
                     trayBounds.y + DEFAULT_MARGIN.y + trayBounds.height / 2
                 );
                 break;
-
             case 3:
                 x = Math.floor(
                     trayBounds.x + DEFAULT_MARGIN.x + trayBounds.width / 2
@@ -173,7 +176,6 @@ export class Switcher {
                         trayBounds.height / 2
                 );
                 break;
-
             case 4:
                 x = Math.floor(
                     trayBounds.x -
@@ -189,7 +191,6 @@ export class Switcher {
                 );
                 break;
         }
-
         return { x: x, y: y };
     }
 
