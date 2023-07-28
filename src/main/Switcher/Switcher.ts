@@ -36,7 +36,8 @@ export class Switcher {
                 () => {
                     if (
                         !this.switcherWindow ||
-                        !this.switcherWindow.isVisible()
+                        !this.switcherWindow.isVisible() ||
+                        !this.switcherWindow.isFocused()
                     ) {
                         this.showSwitcher();
                     } else {
@@ -60,15 +61,15 @@ export class Switcher {
             this.switcherWindow = this.createWindow();
         }
 
-        this.alignWindow();
+        // this.alignWindow();
 
         this.switcherWindow.show();
     }
 
     createWindow(): BrowserWindow {
         this.switcherWindow = new BrowserWindow({
-            width: 200,
-            minWidth: 200,
+            width: 430,
+            minWidth: 430,
             skipTaskbar: true,
             webPreferences: {
                 preload: APP_WINDOW_PRELOAD_WEBPACK_ENTRY,
@@ -101,12 +102,18 @@ export class Switcher {
                 Math.floor(size.width),
                 Math.floor(size.height)
             );
-            this.alignWindow();
+            // this.alignWindow();
+        });
+
+        ipcMain.on('escape-clicked', () => {
+            this.switcherWindow?.hide();
         });
 
         this.switcherWindow.loadURL(APP_WINDOW_WEBPACK_ENTRY);
 
         this.switcherWindow.webContents.send('links', links);
+
+        this.switcherWindow.webContents.openDevTools();
 
         return this.switcherWindow;
     }

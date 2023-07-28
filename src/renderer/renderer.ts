@@ -36,6 +36,7 @@ ipcRenderer.on('links', (event, message) => {
 });
 
 const dropdownParent = document.getElementById('dropdown') as HTMLDivElement;
+const input = document.getElementById('input') as HTMLInputElement;
 
 let focusState = 0;
 
@@ -54,6 +55,12 @@ document.addEventListener('keydown', (event) => {
             const url =
                 dropdownParent.children[focusState].getAttribute('data-url');
             ipcRenderer.send('link-clicked', url);
+        }
+    } else if (event.key === 'Escape') {
+        if (input.value !== '') {
+            input.value = '';
+        } else {
+            ipcRenderer.send('escape-clicked');
         }
     }
 });
@@ -93,7 +100,9 @@ function handleInput(event: Event) {
 
 function highlight(results: Fuse.FuseResult<Link>[]) {
     for (let i = 0; i < dropdownParent.children.length; i++) {
-        const linkEl = dropdownParent.children[i];
+        const linkEl = dropdownParent.children[i].querySelector(
+            '#title'
+        ) as HTMLDivElement;
 
         const innerHTML = linkEl.innerHTML;
 
@@ -125,26 +134,37 @@ function highlight(results: Fuse.FuseResult<Link>[]) {
     }
 }
 
+const dropdownTemplate = document.getElementsByTagName(
+    'template'
+)[0] as HTMLTemplateElement;
+
 function populateDropdown(query: string, dropdown: HTMLDivElement) {
     dropdown.innerHTML = '';
 
-    const results = fuse?.search(query) || [];
+    const results = (fuse?.search(query) || []).slice(0, 10);
 
     results.forEach((link) => {
         const { title, url } = link.item;
-        const a = document.createElement('div');
-        a.textContent = title;
-        a.className = 'dropdown-item';
-        a.setAttribute('data-url', url);
 
-        a.addEventListener('keypress', function (event) {
+        const clone = dropdownTemplate.content.cloneNode(true) as HTMLElement;
+
+        const itemEl = clone.children[0] as HTMLDListElement;
+
+        const titleEl = itemEl.querySelector('#title') as HTMLElement;
+        const urlEl = itemEl.querySelector('#url') as HTMLElement;
+
+        titleEl.textContent = title;
+        urlEl.textContent = url;
+        itemEl.setAttribute('data-url', url);
+
+        itemEl.addEventListener('keypress', function (event) {
             if (event.key === 'Enter') {
                 event.preventDefault();
                 ipcRenderer.send('link-clicked', url);
             }
         });
 
-        dropdown.appendChild(a);
+        dropdown.appendChild(clone);
     });
 }
 

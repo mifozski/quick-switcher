@@ -1,44 +1,116 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="UTF-8" />
-    <title>Quick Switcher!</title>
-    <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
-    <meta
-      http-equiv="Content-Security-Policy"
-      content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'unsafe-inline'"
-    />
-    <meta
-      http-equiv="X-Content-Security-Policy"
-      content="default-src 'self'; script-src 'self'"
-    />
-    <style>
-      body {
-        font-family: Arial, Helvetica, sans-serif;
-        background-color: whitesmoke;
-        padding: 8px;
-        margin: 0;
-        width: 200px;
-      }
-      .dropdown-item {
-        color: #a8a8a8;
-      }
-      .dropdown-item .highlight {
-        color: #6663EE;
-        font-weight: bold;
-      }
-      .dropdown-item.selected {
-        background-color: powderblue;
-        color: #585858;
-      }
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Quick Switcher</title>
+        <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
+        <meta
+            http-equiv="Content-Security-Policy"
+            content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'unsafe-inline'"
+        >
+        <meta
+            http-equiv="X-Content-Security-Policy"
+            content="default-src 'self'; script-src 'self'"
+        >
+        <style>
+          body {
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: #00000000;
+            overflow: hidden;
+            margin: 0;
+          }
+          #container {
+            width: 100%;
+            height: 100%;
+            padding: 8px;
+            margin: 0;
+            width: 430px;
+            overflow: hidden;
+            background-color: whitesmoke;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            /* border-radius: 10px; */
+          }
+          #inputContainer {
+            height: 28px;
+            padding: 3px 5px;
+            display: flex;
+            flex-direction: row;
+            font-size: 18px;
+          }
+          #inputContainer input {
+            all: unset;
+          }
+          #inputContainer #icon{
+            min-width: 20px;
+            min-height: 20px;
+          }
+          hr {
+            all: unset;
+            width: 100%;
+            display: block;
+            min-height: 1px;
+            margin: 0;
+            background-color: #BEBEBE;
+          }
+          .dropdown-item {
+            display: flex;
+            flex-direction: row;
+            color: #454545;
+            border-radius: 6px;
+            padding: 6px 7px;
+            height: 50px;
+          }
+          .dropdown-item-icon {
+            min-width: 20px;
+            min-height: 20px;
+          }
+          .dropdown-item-link {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            overflow: hidden;
+          }
+          .dropdown-item #title {
+            font-size: 18px;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+          }
+          .dropdown-item #url {
+            font-size: 13px;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+          }
+          .dropdown-item .highlight {
+            color: #6663EE;
+            font-weight: bold;
+          }
+          .dropdown-item.selected {
+            background-color: powderblue;
+            color: #585858;
+          }
       </style>
-  </head>
-  <body>
-    <input id="input" placeholder="Type anything" autofocus />
-    <div id="dropdown">
-    </div>
-    <script>var exports = {};
-</script>
-    <!-- <script src="./renderer.js"></script> -->
-  </body>
+        <template>
+            <div class="dropdown-item">
+                <div class="dropdown-item-icon"></div>
+                <div class="dropdown-item-link">
+                    <div class="dropdown-item-title" id="title"></div>
+                    <div class="dropdown-item-url" id="url"></div>
+                </div>
+            </div>
+        </template>
+    </head>
+    <body>
+        <div id="container">
+            <div id="inputContainer">
+                <div id="icon"></div>
+                <input id="input" placeholder="Type anything" autofocus>
+            </div>
+            <hr >
+            <div id="dropdown"></div>
+        </div>
+    </body>
 </html>
