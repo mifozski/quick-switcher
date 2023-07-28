@@ -1,19 +1,23 @@
 {
   "compilerOptions": {
     "module": "commonjs",
+    "allowJs": true,
     "noImplicitAny": true,
     "sourceMap": true,
     "esModuleInterop": true,
     "strictNullChecks": true,
-    "target": "ESNext",
+    "target": "ES6",
     "outDir": "dist",
     "baseUrl": ".",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
     "paths": {
       "*": ["node_modules/*"],
       "src/*": ["src/*"],
     }
   },
   "include": [
-    "src/**/*"
+    "src/**/*",
+    "tools/**/*"
   ]
 }

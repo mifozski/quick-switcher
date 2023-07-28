@@ -10,6 +10,14 @@ export type ConfigSchema = {
     url: string;
 };
 
+process.on('uncaughtException', (err: Error) => {
+    logger.error('uncaughtException', err);
+});
+
+process.on('unhandledRejection', (reason: unknown) => {
+    logger.error('unhandledRejection', reason);
+});
+
 function readConfig() {
     const configPath = app.getPath('userData') + '/config.json';
     if (!fs.existsSync(configPath)) {
@@ -24,14 +32,10 @@ function readConfig() {
 }
 
 app.whenReady().then(() => {
-    logger.info('HERE');
-
     const config = readConfig();
 
     const trayController = new TrayController();
     trayController.init();
-
-    logger.info('HERE2');
 
     const switcher = new Switcher(trayController, config);
     switcher.init();

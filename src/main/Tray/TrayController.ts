@@ -1,20 +1,13 @@
 import { Menu, Tray } from 'electron';
-import path from 'path';
 import { logger } from '../logger';
-import { getResourcePath } from '../paths';
+import { getTrayIconPath } from '../paths';
 
 export class TrayController {
     _tray: Tray;
 
     init(): void {
         logger.info('Initializing tray...');
-        logger.info('getResourcePath:', getResourcePath());
-        const iconPath = path.join(getResourcePath(), 'win/trayIcon.ico');
-        console.log('iconPath:', iconPath);
-        // const iconPath = path.join(
-        //     __dirname,
-        //     '../../assets/mac/IconCircle@16.png'
-        // );
+        const iconPath = getTrayIconPath();
 
         logger.info('IconPath: ' + iconPath);
 

@@ -7,11 +7,13 @@ import {
 } from 'electron';
 import path from 'path';
 
-import { TrayController } from 'src/Tray/TrayController';
-import { ConfigSchema } from 'src/main';
+import { TrayController } from 'src/main/Tray/TrayController';
+import { ConfigSchema } from 'src/main/main';
 
 import { logger } from '../logger';
-import { getResourcePath } from '../paths';
+
+declare const APP_WINDOW_WEBPACK_ENTRY: string;
+declare const APP_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
 
 export class Switcher {
     private switcherWindow: BrowserWindow | null;
@@ -59,8 +61,6 @@ export class Switcher {
             this.switcherWindow = this.createWindow();
         }
 
-        logger.info('Showing switcher');
-
         this.alignWindow();
 
         this.switcherWindow.show();
@@ -71,15 +71,16 @@ export class Switcher {
             width: 200,
             minWidth: 200,
             webPreferences: {
-                preload: path.join(__dirname, '../preload.js'),
+                preload: APP_WINDOW_PRELOAD_WEBPACK_ENTRY,
                 nodeIntegration: true,
                 contextIsolation: false,
             },
             frame: false,
             transparent: true,
+            icon: path.resolve('assets/appIcon.ico'),
         });
 
-        logger.info('config:', this.config);
+        logger.info('Config:', this.config);
 
         const links = this.config.map((config) => {
             return {
@@ -89,7 +90,6 @@ export class Switcher {
         });
 
         ipcMain.on('ready', () => {
-            logger.info('Switcher ready');
             this.switcherWindow?.webContents.send('links', links);
         });
 
@@ -99,7 +99,6 @@ export class Switcher {
         });
 
         ipcMain.on('size-changed', (event, size) => {
-            logger.info('Size changed:', size);
             this.switcherWindow?.setSize(
                 Math.floor(size.width),
                 Math.floor(size.height)
@@ -107,9 +106,7 @@ export class Switcher {
             this.alignWindow();
         });
 
-        this.switcherWindow.loadFile(
-            path.join(getResourcePath(), 'index.html')
-        );
+        this.switcherWindow.loadURL(APP_WINDOW_WEBPACK_ENTRY);
 
         this.switcherWindow.webContents.send('links', links);
 
@@ -129,8 +126,6 @@ export class Switcher {
             x: position.x,
             y: position.y,
         });
-
-        logger.info('set positition:', this.switcherWindow.getBounds());
     }
 
     calculateWindowPosition(): { x: number; y: number } {

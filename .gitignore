@@ -1,5 +1,7 @@
 node_modules
 dist
+out
+.webpack
 
 .DS_Store
 yarn-error.log

@@ -2,13 +2,13 @@
     "name": "quick-switcher",
     "version": "1.0.0",
     "description": "A minimal Electron application written with Typescript",
-    "main": "dist/main.js",
+    "main": ".webpack/main",
     "scripts": {
+        "start": "cross-env NODE_ENV=development electron-forge start",
+        "make": "electron-forge make",
         "build": "tsc",
-        "dist": "electron-builder",
         "watch": "tsc -w",
-        "lint": "eslint -c .eslintrc --ext .ts ./src",
-        "start": "yarn build && electron ./dist/main.js"
+        "lint": "eslint -c .eslintrc --ext .ts ./src"
     },
     "repository": "https://github.com/electron/electron-quick-start-typescript",
     "keywords": [
@@ -19,9 +19,16 @@
     ],
     "author": "GitHub",
     "license": "CC0-1.0",
+    "config": {
+        "forge": "./tools/forge/forge.config.js"
+    },
     "devDependencies": {
+        "@electron-forge/cli": "^6.2.1",
+        "@electron-forge/maker-dmg": "^6.2.1",
+        "@electron-forge/plugin-webpack": "^6.2.1",
         "@typescript-eslint/eslint-plugin": "^4.33.0",
         "@typescript-eslint/parser": "^4.33.0",
+        "@vercel/webpack-asset-relocator-loader": "^1.7.3",
         "cross-env": "^7.0.3",
         "electron": "^24.3.0",
         "electron-builder": "^24.6.3",
@@ -29,7 +36,9 @@
         "eslint-config-prettier": "^8.8.0",
         "eslint-plugin-html": "^7.1.0",
         "eslint-plugin-prettier": "^5.0.0",
+        "fork-ts-checker-webpack-plugin": "^8.0.0",
         "prettier": "^3.0.0",
+        "ts-loader": "^9.4.4",
         "typescript": "^4.8.3"
     },
     "dependencies": {
