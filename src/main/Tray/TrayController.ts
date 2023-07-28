@@ -1,6 +1,7 @@
 import { Menu, Tray, app, shell } from 'electron';
 import { logger } from '../logger';
 import { getTrayIconPath } from '../paths';
+import { importBookmarksFromChrome } from './importBookmarksFromChrome';
 
 export class TrayController {
     _tray: Tray;
@@ -8,8 +9,6 @@ export class TrayController {
     init(): void {
         logger.info('Initializing tray...');
         const iconPath = getTrayIconPath();
-
-        logger.info('IconPath: ' + iconPath);
 
         this._tray = new Tray(iconPath);
         logger.info('Tray initialized');
@@ -20,6 +19,12 @@ export class TrayController {
                 type: 'normal',
                 click: () => {
                     shell.openPath(app.getPath('userData'));
+                },
+            },
+            {
+                label: 'Import Bookmarks from Google',
+                click: () => {
+                    importBookmarksFromChrome();
                 },
             },
             { label: 'Exit', type: 'normal', role: 'quit' },

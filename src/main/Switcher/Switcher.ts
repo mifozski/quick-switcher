@@ -8,7 +8,7 @@ import {
 import path from 'path';
 
 import { TrayController } from 'src/main/Tray/TrayController';
-import { ConfigSchema } from 'src/main/main';
+import { Link } from 'src/main/main';
 
 import { logger } from '../logger';
 
@@ -23,7 +23,7 @@ export class Switcher {
 
     constructor(
         private trayController: TrayController,
-        private config: ConfigSchema[]
+        private config: Link[]
     ) {
         this.switcherWindow = null;
     }
@@ -34,7 +34,6 @@ export class Switcher {
             registered = globalShortcut.register(
                 'CommandOrControl+Shift+J',
                 () => {
-                    logger.info('Triggering switcher');
                     if (
                         !this.switcherWindow ||
                         !this.switcherWindow.isVisible()
@@ -70,6 +69,7 @@ export class Switcher {
         this.switcherWindow = new BrowserWindow({
             width: 200,
             minWidth: 200,
+            skipTaskbar: true,
             webPreferences: {
                 preload: APP_WINDOW_PRELOAD_WEBPACK_ENTRY,
                 nodeIntegration: true,
@@ -79,8 +79,6 @@ export class Switcher {
             transparent: true,
             icon: path.resolve('assets/appIcon.ico'),
         });
-
-        logger.info('Config: ' + this.config);
 
         const links = this.config.map((config) => {
             return {

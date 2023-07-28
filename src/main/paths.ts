@@ -1,7 +1,7 @@
 import path from 'path';
 import { app } from 'electron';
 
-export function getResourcePath(): string {
+function getResourcePath(): string {
     return app.isPackaged
         ? process.resourcesPath
         : path.join(process.cwd(), 'assets');
@@ -25,4 +25,8 @@ export function getTrayIconPath(): string {
     }
 
     return process.platform;
+}
+
+export function getConfigPath(): string {
+    return app.getPath('userData') + '/config.json';
 }

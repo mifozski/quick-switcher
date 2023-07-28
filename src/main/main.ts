@@ -4,8 +4,9 @@ import fs from 'fs';
 import { TrayController } from './Tray/TrayController';
 import { Switcher } from './Switcher/Switcher';
 import { logger } from './logger';
+import { getConfigPath } from './paths';
 
-export type ConfigSchema = {
+export type Link = {
     title: string;
     url: string;
 };
@@ -19,14 +20,15 @@ process.on('unhandledRejection', (reason: unknown) => {
 });
 
 function readConfig() {
-    const configPath = app.getPath('userData') + '/config.json';
+    const configPath = getConfigPath();
+
     if (!fs.existsSync(configPath)) {
         fs.closeSync(fs.openSync(configPath, 'w'));
     }
     const config =
         (JSON.parse(
             fs.readFileSync(configPath).toString() || '[]'
-        ) as ConfigSchema[]) || [];
+        ) as Link[]) || [];
 
     return config;
 }
