@@ -1,15 +1,17 @@
-// Forge Configuration
 const path = require('path');
 const rootDir = process.cwd();
 
 module.exports = {
-    // Packager Config
     packagerConfig: {
         asar: true,
         executableName: 'Quick Switcher',
         appCopyright: 'Copyright (C) 2023 MysticEggs',
         icon: path.resolve(__dirname, 'assets/appIcon'),
-        extraResource: ['assets/appIcon.ico', 'assets/mac/TrayIcon.png'],
+        extraResource: [
+            'assets/appIcon.ico',
+            'assets/mac/TrayIcon.png',
+            'assets/win/TrayIcon.ico',
+        ],
     },
     makers: [
         {
@@ -17,6 +19,10 @@ module.exports = {
             config: {
                 format: 'ULFO',
             },
+        },
+        {
+            name: '@electron-forge/maker-squirrel',
+            config: {},
         },
     ],
     plugins: [
@@ -27,11 +33,9 @@ module.exports = {
                 // Remove 'unsafe-eval' to get rid of console warning in development mode.
                 devContentSecurityPolicy: `default-src 'self' 'unsafe-inline' data:; script-src 'self' 'unsafe-inline' data:`,
                 // Ports
-                port: 3000, // Webpack Dev Server port
-                loggerPort: 9000, // Logger port
-                // Main process webpack configuration
+                port: 3000,
+                loggerPort: 9000,
                 mainConfig: path.join(rootDir, 'tools/webpack/webpack.main.js'),
-                // Renderer process webpack configuration
                 renderer: {
                     // Configuration file path
                     config: path.join(

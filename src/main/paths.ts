@@ -7,16 +7,21 @@ export function getResourcePath(): string {
         : path.join(process.cwd(), 'assets');
 }
 
-export function getTrayIconPath(): string {
-    console.log('platform:', process.platform);
+function getPlatformPath(platformPath: string, fileName: string): string {
+    if (app.isPackaged) {
+        return path.join(getResourcePath(), fileName);
+    } else {
+        return path.join(getResourcePath(), platformPath, fileName);
+    }
+}
 
+export function getTrayIconPath(): string {
     switch (process.platform) {
         case 'darwin':
-            if (app.isPackaged) {
-                return path.join(getResourcePath(), 'TrayIcon.png');
-            } else {
-                return path.join(getResourcePath(), 'mac', 'TrayIcon.png');
-            }
+            return getPlatformPath('mac', 'TrayIcon.png');
+        case 'win32': {
+            return getPlatformPath('win', 'TrayIcon.ico');
+        }
     }
 
     return process.platform;

@@ -1,4 +1,4 @@
-import { Menu, Tray } from 'electron';
+import { Menu, Tray, app, shell } from 'electron';
 import { logger } from '../logger';
 import { getTrayIconPath } from '../paths';
 
@@ -15,6 +15,13 @@ export class TrayController {
         logger.info('Tray initialized');
         const contextMenu = Menu.buildFromTemplate([
             { label: 'Add link', type: 'normal' },
+            {
+                label: 'Open config folder',
+                type: 'normal',
+                click: () => {
+                    shell.openPath(app.getPath('userData'));
+                },
+            },
             { label: 'Exit', type: 'normal', role: 'quit' },
         ]);
         this._tray.setToolTip('Quick Switcher');

@@ -80,7 +80,7 @@ export class Switcher {
             icon: path.resolve('assets/appIcon.ico'),
         });
 
-        logger.info('Config:', this.config);
+        logger.info('Config: ' + this.config);
 
         const links = this.config.map((config) => {
             return {
