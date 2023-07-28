@@ -13,7 +13,7 @@ const fuseOptions = {
     // findAllMatches: false,
     // minMatchCharLength: 1,
     // location: 0,
-    // threshold: 0.6,
+    threshold: 0.8,
     // distance: 100,
     // useExtendedSearch: false,
     // ignoreLocation: false,
@@ -92,6 +92,8 @@ function handleInput(event: Event) {
 
     populateDropdown(query, dropdownParent);
 
+    focusState = 0;
+
     updateSelection();
     highlight(results);
 
@@ -168,9 +170,7 @@ function populateDropdown(query: string, dropdown: HTMLDivElement) {
     });
 }
 
-document
-    .getElementsByTagName('input')[0]
-    .addEventListener('input', handleInput);
+input.addEventListener('input', handleInput);
 
 function sendSizeChanged() {
     const switcherSize = document.body.getBoundingClientRect();
