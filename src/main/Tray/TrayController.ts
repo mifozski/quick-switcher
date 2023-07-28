@@ -15,21 +15,21 @@ export class TrayController {
         const contextMenu = Menu.buildFromTemplate([
             { label: 'Add link', type: 'normal' },
             {
-                label: 'Open config folder',
+                label: 'Open Config Folder',
                 type: 'normal',
                 click: () => {
                     shell.openPath(app.getPath('userData'));
                 },
             },
             {
-                label: 'Import Bookmarks from Google',
+                label: 'Import Bookmarks from Google Chrome',
                 click: () => {
                     importBookmarksFromChrome();
                 },
             },
             { label: 'Exit', type: 'normal', role: 'quit' },
         ]);
-        this._tray.setToolTip('Quick Switcher');
+        this._tray.setToolTip('Quick Switcher (Cmd + Shift + J');
         this._tray.setContextMenu(contextMenu);
     }
 

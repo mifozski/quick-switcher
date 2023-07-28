@@ -1,21 +1,11 @@
-import { BrowserWindow, app } from 'electron';
+import { BrowserWindow } from 'electron';
 import fs from 'fs';
-import path from 'path';
 
 import { Link } from '../main';
-import { getConfigPath } from '../paths';
+import { getConfigPath, getGoogleChromeBookmarksPath } from '../paths';
 
 export function importBookmarksFromChrome(): void {
-    const bookmarksPath = path.join(
-        app.getPath('appData'),
-        '..',
-        'Local',
-        'Google',
-        'Chrome',
-        'User Data',
-        'Default',
-        'Bookmarks'
-    );
+    const bookmarksPath = getGoogleChromeBookmarksPath();
 
     const bookmarksFile = fs.readFileSync(bookmarksPath).toString();
 

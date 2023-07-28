@@ -30,3 +30,29 @@ export function getTrayIconPath(): string {
 export function getConfigPath(): string {
     return app.getPath('userData') + '/config.json';
 }
+
+export function getGoogleChromeBookmarksPath(): string {
+    switch (process.platform) {
+        case 'darwin': {
+            return (
+                app.getPath('home') +
+                '/Library/Application Support/Google/Chrome/Default/Bookmarks'
+            );
+        }
+        case 'win32': {
+            return path.join(
+                app.getPath('appData'),
+                '..',
+                'Local',
+                'Google',
+                'Chrome',
+                'User Data',
+                'Default',
+                'Bookmarks'
+            );
+        }
+        default: {
+            return '';
+        }
+    }
+}

@@ -81,6 +81,10 @@ export class Switcher {
             icon: path.resolve('assets/appIcon.ico'),
         });
 
+        this.switcherWindow.setVisibleOnAllWorkspaces(true, {
+            visibleOnFullScreen: true,
+        });
+
         const links = this.config.map((config) => {
             return {
                 url: config.url,
@@ -113,7 +117,7 @@ export class Switcher {
 
         this.switcherWindow.webContents.send('links', links);
 
-        this.switcherWindow.webContents.openDevTools();
+        // this.switcherWindow.webContents.openDevTools();
 
         return this.switcherWindow;
     }
