@@ -29,7 +29,7 @@ export class TrayController {
             },
             { label: 'Exit', type: 'normal', role: 'quit' },
         ]);
-        this._tray.setToolTip('Quick Switcher (Cmd + Shift + J');
+        this._tray.setToolTip('Quick Switcher (Cmd + Shift + J)');
         this._tray.setContextMenu(contextMenu);
     }
 

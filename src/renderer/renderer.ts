@@ -25,7 +25,7 @@ const fuseOptions = {
 type Link = {
     url: string;
     title: string;
-    favicon: string;
+    faviconUrl: string;
 };
 
 let fuse: Fuse<Link> | null = null;
@@ -154,10 +154,13 @@ function populateDropdown(query: string, dropdown: HTMLDivElement) {
 
         const titleEl = itemEl.querySelector('#title') as HTMLElement;
         const urlEl = itemEl.querySelector('#url') as HTMLElement;
+        const faviconEl = itemEl.querySelector('#favicon') as HTMLElement;
 
         titleEl.textContent = title;
         urlEl.textContent = url;
         itemEl.setAttribute('data-url', url);
+
+        faviconEl.style.background = 'url(' + link.item.faviconUrl + ')';
 
         itemEl.addEventListener('keypress', function (event) {
             if (event.key === 'Enter') {

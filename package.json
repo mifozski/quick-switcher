@@ -1,7 +1,7 @@
 {
     "name": "quick-switcher",
-    "version": "1.0.0",
-    "description": "A minimal Electron application written with Typescript",
+    "version": "1.1.0",
+    "description": "A small productivity tool intended to quickly open internet links",
     "main": ".webpack/main",
     "scripts": {
         "start": "cross-env NODE_ENV=development electron-forge start",
@@ -12,12 +12,15 @@
     },
     "repository": "https://github.com/electron/electron-quick-start-typescript",
     "keywords": [
-        "Electron",
+        "electron",
+        "webpack",
+        "typescript",
+        "electron-forge",
+        "",
         "quick",
-        "switcher",
-        "typescript"
+        "switcher"
     ],
-    "author": "GitHub",
+    "author": "mifozski@gmail.com",
     "license": "CC0-1.0",
     "config": {
         "forge": "./tools/forge/forge.config.js"
@@ -34,7 +37,6 @@
         "@vercel/webpack-asset-relocator-loader": "^1.7.3",
         "cross-env": "^7.0.3",
         "electron": "^24.3.0",
-        "electron-builder": "^24.6.3",
         "eslint": "^7.32.0",
         "eslint-config-prettier": "^8.8.0",
         "eslint-plugin-html": "^7.1.0",

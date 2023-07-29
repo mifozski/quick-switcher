@@ -4,6 +4,7 @@ import {
     ipcMain,
     shell,
     screen,
+    app,
 } from 'electron';
 import path from 'path';
 
@@ -89,6 +90,7 @@ export class Switcher {
             return {
                 url: config.url,
                 title: config.title,
+                faviconUrl: config.faviconUrl,
             };
         });
 
@@ -117,7 +119,9 @@ export class Switcher {
 
         this.switcherWindow.webContents.send('links', links);
 
-        // this.switcherWindow.webContents.openDevTools();
+        if (!app.isPackaged) {
+            this.switcherWindow.webContents.openDevTools();
+        }
 
         return this.switcherWindow;
     }

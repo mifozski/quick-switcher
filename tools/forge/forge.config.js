@@ -4,6 +4,7 @@ const rootDir = process.cwd();
 module.exports = {
     packagerConfig: {
         asar: true,
+        name: 'Quick Switcher',
         executableName: 'Quick Switcher',
         appCopyright: 'Copyright (C) 2023 MysticEggs',
         icon: path.resolve(__dirname, 'assets/appIcon'),

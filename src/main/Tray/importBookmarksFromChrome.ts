@@ -51,9 +51,11 @@ type ChromeBookmark =
 
 function collectLinks(bookmark: ChromeBookmark, links: Link[]): void {
     if (bookmark.type === 'url') {
+        const faviconUrl = new URL(bookmark.url).origin + '/favicon.ico';
         links.push({
             title: bookmark.name,
             url: bookmark.url,
+            faviconUrl,
         });
     } else {
         bookmark.children.forEach((childBookmark) =>

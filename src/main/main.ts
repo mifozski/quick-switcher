@@ -9,6 +9,7 @@ import { getConfigPath } from './paths';
 export type Link = {
     title: string;
     url: string;
+    faviconUrl: string;
 };
 
 process.on('uncaughtException', (err: Error) => {
@@ -30,6 +31,11 @@ function readConfig() {
             fs.readFileSync(configPath).toString() || '[]'
         ) as Link[]) || [];
 
+    const needMigration = doMigrations(config);
+    if (needMigration) {
+        fs.writeFileSync(configPath, JSON.stringify(config, null, 2));
+    }
+
     return config;
 }
 
@@ -48,3 +54,21 @@ app.on('window-all-closed', () => {
         app.quit();
     }
 });
+
+function doMigrations(config: Link[]): boolean {
+    return addFaviconUrls(config);
+}
+
+function addFaviconUrls(config: Link[]): boolean {
+    let needMigration = false;
+    for (const link of config) {
+        if (!link.faviconUrl) {
+            needMigration = true;
+            const url = new URL(link.url);
+            const faviconUrl = url.origin + '/favicon.ico';
+            link.faviconUrl = faviconUrl;
+        }
+    }
+
+    return needMigration;
+}
