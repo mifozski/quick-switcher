@@ -1,13 +1,16 @@
-<!DOCTYPE html>
+<!-- eslint-disable @html-eslint/require-closing-tags -->
+<!-- eslint-disable @html-eslint/no-extra-spacing-attrs -->
+
+<!doctype html>
 <html lang="en">
     <head>
-        <meta charset="UTF-8">
+        <meta charset="UTF-8" />
         <title>Quick Switcher</title>
         <meta
             http-equiv="Content-Security-Policy"
             content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src http: file:; img-src 'self' http: https:"
-        >
-        <link rel="stylesheet" href="../assets/styles.css">
+        />
+        <link rel="stylesheet" href="../assets/styles.css" />
         <template>
             <div class="dropdown-item">
                 <div class="dropdown-item-icon" id="favicon"></div>
@@ -21,10 +24,10 @@
     <body>
         <div id="container">
             <div id="inputContainer">
-                <img id="icon" src = "../assets/SearchIcon.svg" alt="">
-                <input id="input" placeholder="Type anything" autofocus>
+                <img id="icon" src="../assets/SearchIcon.svg" alt="" />
+                <input id="input" placeholder="Type anything" autofocus />
             </div>
-            <hr >
+            <hr />
             <div id="dropdown"></div>
         </div>
     </body>
