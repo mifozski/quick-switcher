@@ -1,20 +1,9 @@
 const path = require('path');
 const rootDir = process.cwd();
 
-console.log('iconPath:', path.join(process.cwd(), 'assets', 'AppIcon'));
-console.log('iconPath:', path.join(process.cwd(), 'assets', 'AppIcon'));
-console.log('iconPath:', path.join(process.cwd(), 'assets', 'AppIcon'));
-console.log('iconPath:', path.join(process.cwd(), 'assets', 'AppIcon'));
-console.log('iconPath:', path.join(process.cwd(), 'assets', 'AppIcon'));
-console.log('iconPath:', path.join(process.cwd(), 'assets', 'AppIcon'));
-console.log('iconPath:', path.join(process.cwd(), 'assets', 'AppIcon'));
-console.log('iconPath:', path.join(process.cwd(), 'assets', 'AppIcon'));
-console.log('iconPath:', path.join(process.cwd(), 'assets', 'AppIcon'));
-console.log('iconPath:', path.join(process.cwd(), 'assets', 'AppIcon'));
-
 module.exports = {
     packagerConfig: {
-        asar: true,
+        asar: false,
         name: 'Quick Switcher',
         executableName: 'Quick Switcher',
         appCopyright: 'Copyright (C) 2023 MysticEggs',
@@ -64,7 +53,10 @@ module.exports = {
                             // React Hot Module Replacement (HMR)
                             rhmr: 'react-hot-loader/patch',
                             // HTML index file template
-                            html: path.join(rootDir, 'src/renderer/index.html'),
+                            html: path.join(
+                                rootDir,
+                                'src/renderer/assets/index.html'
+                            ),
                             // Renderer
                             js: path.join(rootDir, 'src/renderer/renderer.ts'),
                             // Main Window

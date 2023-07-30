@@ -4,8 +4,6 @@ const CopyPlugin = require('copy-webpack-plugin');
 const rules = require('./webpack.rules');
 const plugins = require('./webpack.plugins');
 
-console.log('__dirname', __dirname);
-console.log('cwd()', process.cwd());
 module.exports = {
     module: {
         rules,
@@ -24,9 +22,13 @@ module.exports = {
                     ),
                     to: path.resolve(
                         process.cwd(),
-                        '.webpack/renderer',
+                        '.webpack',
+                        'renderer',
                         'assets'
                     ),
+                    globOptions: {
+                        ignore: ['**/index.html'],
+                    },
                 },
             ],
         }),

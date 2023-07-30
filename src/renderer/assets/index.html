@@ -3,16 +3,11 @@
     <head>
         <meta charset="UTF-8">
         <title>Quick Switcher</title>
-        <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
         <meta
             http-equiv="Content-Security-Policy"
-            content="default-src 'self' 'unsafe-inline' data:; script-src 'self' 'unsafe-inline'; style-src 'unsafe-inline' http:; img-src 'self' http: https:"
+            content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src http: file:; img-src 'self' http: https:"
         >
-        <meta
-            http-equiv="X-Content-Security-Policy"
-            content="default-src 'self' 'unsafe-inline' data:; script-src 'self'; img-src 'self' https: data: blob: 'unsafe-eval'"
-        >
-        <link rel="stylesheet" href="./assets/styles.css">
+        <link rel="stylesheet" href="../assets/styles.css">
         <template>
             <div class="dropdown-item">
                 <div class="dropdown-item-icon" id="favicon"></div>
@@ -26,9 +21,7 @@
     <body>
         <div id="container">
             <div id="inputContainer">
-                <!-- <div id="icon"> -->
-                <img id="icon" src = "/assets/SearchIcon.svg" alt="">
-                <!-- </div> -->
+                <img id="icon" src = "../assets/SearchIcon.svg" alt="">
                 <input id="input" placeholder="Type anything" autofocus>
             </div>
             <hr >
