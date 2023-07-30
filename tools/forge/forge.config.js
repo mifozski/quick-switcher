@@ -1,13 +1,24 @@
 const path = require('path');
 const rootDir = process.cwd();
 
+console.log('iconPath:', path.join(process.cwd(), 'assets', 'AppIcon'));
+console.log('iconPath:', path.join(process.cwd(), 'assets', 'AppIcon'));
+console.log('iconPath:', path.join(process.cwd(), 'assets', 'AppIcon'));
+console.log('iconPath:', path.join(process.cwd(), 'assets', 'AppIcon'));
+console.log('iconPath:', path.join(process.cwd(), 'assets', 'AppIcon'));
+console.log('iconPath:', path.join(process.cwd(), 'assets', 'AppIcon'));
+console.log('iconPath:', path.join(process.cwd(), 'assets', 'AppIcon'));
+console.log('iconPath:', path.join(process.cwd(), 'assets', 'AppIcon'));
+console.log('iconPath:', path.join(process.cwd(), 'assets', 'AppIcon'));
+console.log('iconPath:', path.join(process.cwd(), 'assets', 'AppIcon'));
+
 module.exports = {
     packagerConfig: {
         asar: true,
         name: 'Quick Switcher',
         executableName: 'Quick Switcher',
         appCopyright: 'Copyright (C) 2023 MysticEggs',
-        icon: path.resolve(__dirname, 'assets/appIcon'),
+        icon: path.join(process.cwd(), 'assets', 'AppIcon'),
         extraResource: [
             'assets/appIcon.ico',
             'assets/mac/TrayIcon.png',
@@ -23,7 +34,9 @@ module.exports = {
         },
         {
             name: '@electron-forge/maker-squirrel',
-            config: {},
+            config: {
+                setupIcon: path.join(process.cwd(), 'assets', 'AppIcon.ico'),
+            },
         },
     ],
     plugins: [
@@ -32,7 +45,7 @@ module.exports = {
             config: {
                 // Fix content-security-policy error when image or video src isn't same origin
                 // Remove 'unsafe-eval' to get rid of console warning in development mode.
-                devContentSecurityPolicy: `default-src 'self' 'unsafe-inline' data:; script-src 'self' 'unsafe-inline' data:`,
+                devContentSecurityPolicy: `default-src 'self' 'unsafe-inline' data:; script-src 'self' 'unsafe-inline' data:; img-src 'self' http: https: 'unsafe-inline'; style-src http:`,
                 // Ports
                 port: 3000,
                 loggerPort: 9000,

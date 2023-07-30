@@ -6,97 +6,13 @@
         <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
         <meta
             http-equiv="Content-Security-Policy"
-            content="default-src 'self' 'unsafe-inline' data:; script-src 'self' 'unsafe-inline'; style-src 'unsafe-inline'; img-src 'self' http: https: data: blob: 'unsafe-eval'"
+            content="default-src 'self' 'unsafe-inline' data:; script-src 'self' 'unsafe-inline'; style-src 'unsafe-inline' http:; img-src 'self' http: https:"
         >
         <meta
             http-equiv="X-Content-Security-Policy"
             content="default-src 'self' 'unsafe-inline' data:; script-src 'self'; img-src 'self' https: data: blob: 'unsafe-eval'"
         >
-        <style>
-          body {
-            font-family: Arial, Helvetica, sans-serif;
-            background-color: #00000000;
-            overflow: hidden;
-            margin: 0;
-          }
-          #container {
-            height: 100%;
-            padding: 8px;
-            margin: 0;
-            overflow: hidden;
-            background-color: whitesmoke;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            /* border-radius: 10px; */
-          }
-          #inputContainer {
-            height: 28px;
-            padding: 3px 5px;
-            display: flex;
-            flex-direction: row;
-            font-size: 18px;
-          }
-          #inputContainer input {
-            all: unset;
-          }
-          #inputContainer #icon{
-            min-width: 20px;
-            min-height: 20px;
-          }
-          hr {
-            all: unset;
-            width: 100%;
-            display: block;
-            min-height: 1px;
-            margin: 0;
-            background-color: #BEBEBE;
-          }
-          .dropdown-item {
-            display: flex;
-            flex-direction: row;
-            color: #454545;
-            border-radius: 6px;
-            padding: 6px 7px;
-            height: 50px;
-            gap: 7px;
-          }
-          .dropdown-item-icon {
-            flex-shrink: 0;
-            flex-basis: 20px;
-            max-height: 20px;
-            background-size: contain !important;
-            background-repeat: no-repeat !important;
-          }
-          .dropdown-item-link {
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-            overflow: hidden;
-          }
-          .dropdown-item #title {
-            font-size: 18px;
-            white-space: nowrap;
-            text-overflow: ellipsis;
-            overflow: hidden;
-            letter-spacing: 0.2px;
-          }
-          .dropdown-item #url {
-            font-size: 13px;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            overflow: hidden;
-            letter-spacing: 0.3px;
-          }
-          .dropdown-item .highlight {
-            color: #6663EE;
-            font-weight: bold;
-          }
-          .dropdown-item.selected {
-            background-color: powderblue;
-            color: #585858;
-          }
-      </style>
+        <link rel="stylesheet" href="./assets/styles.css">
         <template>
             <div class="dropdown-item">
                 <div class="dropdown-item-icon" id="favicon"></div>
@@ -110,7 +26,9 @@
     <body>
         <div id="container">
             <div id="inputContainer">
-                <div id="icon"></div>
+                <!-- <div id="icon"> -->
+                <img id="icon" src = "/assets/SearchIcon.svg" alt="">
+                <!-- </div> -->
                 <input id="input" placeholder="Type anything" autofocus>
             </div>
             <hr >

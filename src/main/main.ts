@@ -40,6 +40,13 @@ function readConfig() {
 }
 
 app.whenReady().then(() => {
+    const configPath = getConfigPath();
+    if (!fs.existsSync(configPath)) {
+        app.setLoginItemSettings({
+            openAtLogin: true,
+        });
+    }
+
     const config = readConfig();
 
     const trayController = new TrayController();

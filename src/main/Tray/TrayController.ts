@@ -13,7 +13,6 @@ export class TrayController {
         this._tray = new Tray(iconPath);
         logger.info('Tray initialized');
         const contextMenu = Menu.buildFromTemplate([
-            { label: 'Add link', type: 'normal' },
             {
                 label: 'Open Config Folder',
                 type: 'normal',
@@ -25,6 +24,17 @@ export class TrayController {
                 label: 'Import Bookmarks from Google Chrome',
                 click: () => {
                     importBookmarksFromChrome();
+                },
+            },
+            {
+                label: 'Launch at Startup',
+                type: 'checkbox',
+                checked: app.getLoginItemSettings().openAtLogin,
+                click: (args) => {
+                    console.log(args.checked);
+                    app.setLoginItemSettings({
+                        openAtLogin: args.checked,
+                    });
                 },
             },
             { label: 'Exit', type: 'normal', role: 'quit' },
