@@ -1,10 +1,9 @@
-import { BrowserWindow } from 'electron';
 import fs from 'fs';
 
-import { Link } from '../main';
-import { getConfigPath, getGoogleChromeBookmarksPath } from '../paths';
+import { getGoogleChromeBookmarksPath } from '../paths';
+import { Link } from '../Config';
 
-export function importBookmarksFromChrome(): void {
+export function getBookmarksFromChrome(): Link[] {
     const bookmarksPath = getGoogleChromeBookmarksPath();
 
     const bookmarksFile = fs.readFileSync(bookmarksPath).toString();
@@ -17,25 +16,7 @@ export function importBookmarksFromChrome(): void {
         collectLinks(bookmarks.roots[rootKey], links);
     });
 
-    const configPath = getConfigPath();
-    const config =
-        (JSON.parse(
-            fs.readFileSync(configPath).toString() || '[]'
-        ) as Link[]) || [];
-
-    const linkMap: { [url: string]: boolean } = {};
-    const nextConfig = config.concat(links).reduce<Link[]>((acc, link) => {
-        if (linkMap[link.url]) {
-            return acc;
-        }
-        linkMap[link.url] = true;
-        acc.push(link);
-        return acc;
-    }, []);
-
-    fs.writeFileSync(configPath, JSON.stringify(nextConfig, null, 2));
-
-    BrowserWindow.getAllWindows()[0].webContents.send('links', nextConfig);
+    return links;
 }
 
 type ChromeBookmark =

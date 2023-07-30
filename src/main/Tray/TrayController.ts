@@ -1,10 +1,13 @@
 import { Menu, Tray, app, shell } from 'electron';
 import { logger } from '../logger';
 import { getTrayIconPath } from '../paths';
-import { importBookmarksFromChrome } from './importBookmarksFromChrome';
+import { getBookmarksFromChrome as getBookmarksFromChrome } from './getBookmarksFromChrome';
+import { Config } from '../Config';
 
 export class TrayController {
     _tray: Tray;
+
+    constructor(private config: Config) {}
 
     init(): void {
         logger.info('Initializing tray...');
@@ -23,7 +26,8 @@ export class TrayController {
             {
                 label: 'Import Bookmarks from Google Chrome',
                 click: () => {
-                    importBookmarksFromChrome();
+                    const links = getBookmarksFromChrome();
+                    this.config.addLinks(links);
                 },
             },
             {

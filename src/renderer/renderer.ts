@@ -1,5 +1,6 @@
 import { ipcRenderer } from 'electron';
 import Fuse from 'fuse.js';
+import { Link } from 'src/main/Config';
 
 ipcRenderer.send('ready');
 
@@ -20,12 +21,6 @@ const fuseOptions = {
     // ignoreFieldNorm: false,
     // fieldNormWeight: 1,
     keys: ['title', 'url'],
-};
-
-type Link = {
-    url: string;
-    title: string;
-    faviconUrl: string;
 };
 
 let fuse: Fuse<Link> | null = null;

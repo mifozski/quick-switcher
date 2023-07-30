@@ -4,14 +4,13 @@ import {
     ipcMain,
     shell,
     screen,
-    app,
 } from 'electron';
 import path from 'path';
 
 import { TrayController } from 'src/main/Tray/TrayController';
-import { Link } from 'src/main/main';
 
 import { logger } from '../logger';
+import { Config } from '../Config';
 
 declare const APP_WINDOW_WEBPACK_ENTRY: string;
 declare const APP_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
@@ -24,12 +23,16 @@ export class Switcher {
 
     constructor(
         private trayController: TrayController,
-        private config: Link[]
+        private config: Config
     ) {
         this.switcherWindow = null;
     }
 
     init(): void {
+        this.config.addUpdateListener(() => {
+            this.switcherWindow?.webContents.send('links', this.config.links);
+        });
+
         let registered;
         try {
             registered = globalShortcut.register(
@@ -86,13 +89,7 @@ export class Switcher {
             visibleOnFullScreen: true,
         });
 
-        const links = this.config.map((config) => {
-            return {
-                url: config.url,
-                title: config.title,
-                faviconUrl: config.faviconUrl,
-            };
-        });
+        const links = this.config.links;
 
         ipcMain.on('ready', () => {
             this.switcherWindow?.webContents.send('links', links);
@@ -119,9 +116,9 @@ export class Switcher {
 
         this.switcherWindow.webContents.send('links', links);
 
-        if (!app.isPackaged) {
-            this.switcherWindow.webContents.openDevTools();
-        }
+        // if (!app.isPackaged) {
+        this.switcherWindow.webContents.openDevTools();
+        // }
 
         return this.switcherWindow;
     }
