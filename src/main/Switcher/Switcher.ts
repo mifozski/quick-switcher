@@ -4,8 +4,8 @@ import {
     ipcMain,
     shell,
     screen,
+    app,
 } from 'electron';
-import path from 'path';
 
 import { TrayController } from 'src/main/Tray/TrayController';
 
@@ -82,7 +82,6 @@ export class Switcher {
             },
             frame: false,
             transparent: true,
-            icon: path.resolve('assets/appIcon.ico'),
         });
 
         this.switcherWindow.setVisibleOnAllWorkspaces(true, {
@@ -116,9 +115,9 @@ export class Switcher {
 
         this.switcherWindow.webContents.send('links', links);
 
-        // if (!app.isPackaged) {
-        this.switcherWindow.webContents.openDevTools();
-        // }
+        if (!app.isPackaged) {
+            this.switcherWindow.webContents.openDevTools();
+        }
 
         return this.switcherWindow;
     }

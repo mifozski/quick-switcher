@@ -16,11 +16,14 @@ process.on('unhandledRejection', (reason: unknown) => {
 });
 
 app.whenReady().then(() => {
-    const configPath = getConfigPath();
-    if (!fs.existsSync(configPath)) {
-        app.setLoginItemSettings({
-            openAtLogin: true,
-        });
+    if (app.isPackaged) {
+        const configPath = getConfigPath();
+        console.log('isPackaged:', app.isPackaged);
+        if (!fs.existsSync(configPath)) {
+            app.setLoginItemSettings({
+                openAtLogin: true,
+            });
+        }
     }
 
     const config = new Config();

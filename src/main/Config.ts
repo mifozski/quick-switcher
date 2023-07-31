@@ -54,15 +54,21 @@ export class Config {
     }
 
     private getLinksWithoutDuplicates(links: Link[], newLinks: Link[]): Link[] {
-        const linkMap: { [url: string]: boolean } = {};
-        const nextLinks = links.concat(newLinks).reduce<Link[]>((acc, link) => {
-            if (linkMap[link.url]) {
-                return acc;
+        const existingLinkMap: { [url: string]: number } = {};
+
+        links.forEach((link, i) => {
+            existingLinkMap[link.url] = i;
+        });
+
+        const nextLinks = links;
+
+        newLinks.forEach((newLink) => {
+            if (existingLinkMap[newLink.url] != null) {
+                nextLinks[existingLinkMap[newLink.url]].title = newLink.title;
+            } else {
+                nextLinks.push(newLink);
             }
-            linkMap[link.url] = true;
-            acc.push(link);
-            return acc;
-        }, []);
+        });
 
         return nextLinks;
     }
