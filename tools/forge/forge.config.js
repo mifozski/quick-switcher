@@ -8,6 +8,9 @@ module.exports = {
         executableName: 'Quick Switcher',
         appCopyright: 'Copyright (C) 2023 MysticEggs',
         icon: path.join(process.cwd(), 'assets', 'AppIcon'),
+        extendInfo: {
+            LSUIElement: true,
+        },
         extraResource: [
             'assets/appIcon.ico',
             'assets/mac/TrayIcon.png',
