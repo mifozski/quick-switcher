@@ -77,8 +77,8 @@ export class Switcher {
             skipTaskbar: true,
             webPreferences: {
                 preload: APP_WINDOW_PRELOAD_WEBPACK_ENTRY,
-                nodeIntegration: true,
-                contextIsolation: false,
+                nodeIntegration: false,
+                contextIsolation: true,
             },
             frame: false,
             transparent: true,

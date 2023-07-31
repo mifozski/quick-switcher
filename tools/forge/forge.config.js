@@ -8,6 +8,7 @@ module.exports = {
         executableName: 'Quick Switcher',
         appCopyright: 'Copyright (C) 2023 MysticEggs',
         icon: path.join(process.cwd(), 'assets', 'AppIcon'),
+        appCategoryType: 'public.app-category.productivity',
         extendInfo: {
             LSUIElement: true,
         },

@@ -8,7 +8,7 @@ module.exports = {
     module: {
         rules,
     },
-    target: 'electron-renderer',
+    target: 'web',
     plugins: [
         ...plugins,
         new CopyPlugin({

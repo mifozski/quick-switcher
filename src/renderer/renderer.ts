@@ -1,8 +1,7 @@
-import { ipcRenderer } from 'electron';
 import Fuse from 'fuse.js';
 import { Link } from 'src/main/Config';
 
-ipcRenderer.send('ready');
+window.ipc.send('ready');
 
 sendSizeChanged();
 
@@ -25,7 +24,7 @@ const fuseOptions = {
 
 let fuse: Fuse<Link> | null = null;
 
-ipcRenderer.on('links', (event, message) => {
+window.ipc.on('links', (event, message) => {
     const links = message as Link[];
     fuse = new Fuse(links, fuseOptions);
 });
@@ -49,13 +48,13 @@ document.addEventListener('keydown', (event) => {
         if (focusState > -1 && focusState < dropdownParent.children.length) {
             const url =
                 dropdownParent.children[focusState].getAttribute('data-url');
-            ipcRenderer.send('link-clicked', url);
+            window.ipc.send('link-clicked', url);
         }
     } else if (event.key === 'Escape') {
         if (input.value !== '') {
             input.value = '';
         } else {
-            ipcRenderer.send('escape-clicked');
+            window.ipc.send('escape-clicked');
         }
     }
 });
@@ -160,7 +159,7 @@ function populateDropdown(query: string, dropdown: HTMLDivElement) {
         itemEl.addEventListener('keypress', function (event) {
             if (event.key === 'Enter') {
                 event.preventDefault();
-                ipcRenderer.send('link-clicked', url);
+                window.ipc.send('link-clicked', url);
             }
         });
 
@@ -173,7 +172,7 @@ input.addEventListener('input', handleInput);
 function sendSizeChanged() {
     const switcherSize = document.body.getBoundingClientRect();
 
-    ipcRenderer.send('size-changed', {
+    window.ipc.send('size-changed', {
         width: switcherSize.width,
         height: switcherSize.height,
     });
