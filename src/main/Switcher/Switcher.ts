@@ -82,6 +82,7 @@ export class Switcher {
             },
             frame: false,
             transparent: true,
+            alwaysOnTop: true,
         });
 
         this.switcherWindow.setVisibleOnAllWorkspaces(true, {

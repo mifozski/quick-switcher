@@ -6,20 +6,28 @@ window.ipc.send('ready');
 sendSizeChanged();
 
 const fuseOptions = {
-    // isCaseSensitive: false,
-    // includeScore: false,
+    includeScore: true,
     shouldSort: true,
     includeMatches: true,
-    // findAllMatches: false,
-    // minMatchCharLength: 1,
+    findAllMatches: true,
+    minMatchCharLength: 2,
     // location: 0,
-    threshold: 0.6,
-    distance: 120,
+    threshold: 0.5,
+    distance: 130,
+    ignoreLocation: true,
     // useExtendedSearch: false,
-    // ignoreLocation: false,
     // ignoreFieldNorm: false,
     // fieldNormWeight: 1,
-    keys: ['title', 'url'],
+    keys: [
+        {
+            name: 'title',
+            weight: 2,
+        },
+        {
+            name: 'url',
+            weight: 1,
+        },
+    ],
 };
 
 let fuse: Fuse<Link> | null = null;
