@@ -12,6 +12,7 @@
     },
     "repository": "https://github.com/electron/electron-quick-start-typescript",
     "keywords": [
+        "fuzzy-search",
         "electron",
         "webpack",
         "typescript",
