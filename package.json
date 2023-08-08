@@ -1,13 +1,12 @@
 {
     "name": "quick-switcher",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "description": "A productivity app intended to quickly open internet links",
     "main": ".webpack/main",
     "scripts": {
         "start": "cross-env NODE_ENV=development electron-forge start",
         "make": "electron-forge make",
-        "build": "tsc",
-        "watch": "tsc -w",
+        "ts": "tsc",
         "lint": "eslint -c .eslintrc --ext .ts ./src"
     },
     "repository": "https://github.com/electron/electron-quick-start-typescript",

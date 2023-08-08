@@ -13,7 +13,7 @@ module.exports = {
             LSUIElement: true,
         },
         extraResource: [
-            'assets/appIcon.ico',
+            'assets/AppIcon.ico',
             'assets/mac/TrayIcon.png',
             'assets/win/TrayIcon.ico',
         ],
