@@ -6,6 +6,7 @@ import { Switcher } from './Switcher/Switcher';
 import { logger } from './logger';
 import { getConfigPath } from './paths';
 import { Config } from './Config';
+import './ConfigSync';
 
 process.on('uncaughtException', (err: Error) => {
     logger.error('uncaughtException', err);
