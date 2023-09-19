@@ -65,9 +65,8 @@ export class Switcher {
             this.switcherWindow = this.createWindow();
         }
 
-        // this.alignWindow();
-
         this.switcherWindow.show();
+        this.switcherWindow.webContents.send('onShown');
     }
 
     createWindow(): BrowserWindow {
@@ -105,7 +104,6 @@ export class Switcher {
                 Math.floor(size.width),
                 Math.floor(size.height)
             );
-            // this.alignWindow();
         });
 
         ipcMain.on('escape-clicked', () => {
@@ -121,82 +119,6 @@ export class Switcher {
         }
 
         return this.switcherWindow;
-    }
-
-    alignWindow(): void {
-        if (!this.switcherWindow) {
-            return;
-        }
-
-        const position = this.calculateWindowPosition();
-        const windowSize = this.switcherWindow?.getSize() || [0, 0];
-        this.switcherWindow.setBounds({
-            width: windowSize[0],
-            height: windowSize[1],
-            x: position.x,
-            y: position.y,
-        });
-    }
-
-    calculateWindowPosition(): { x: number; y: number } {
-        const screenBounds = screen.getPrimaryDisplay().size;
-        const trayBounds = this.trayController.tray.getBounds();
-        let trayPos = 4;
-        trayPos =
-            trayBounds.y > screenBounds.height / 2 ? trayPos : trayPos / 2;
-        trayPos = trayBounds.x > screenBounds.width / 2 ? trayPos : trayPos - 1;
-        const margin_x = 0;
-        const margin_y = 0;
-        const DEFAULT_MARGIN = { x: margin_x, y: margin_y };
-        let x = 0;
-        let y = 0;
-        switch (trayPos) {
-            case 1:
-                x = Math.floor(
-                    trayBounds.x + DEFAULT_MARGIN.x + trayBounds.width / 2
-                );
-                y = Math.floor(
-                    trayBounds.y + DEFAULT_MARGIN.y + trayBounds.height / 2
-                );
-                break;
-            case 2:
-                x = Math.floor(
-                    trayBounds.x -
-                        this.width -
-                        DEFAULT_MARGIN.x +
-                        trayBounds.width / 2
-                );
-                y = Math.floor(
-                    trayBounds.y + DEFAULT_MARGIN.y + trayBounds.height / 2
-                );
-                break;
-            case 3:
-                x = Math.floor(
-                    trayBounds.x + DEFAULT_MARGIN.x + trayBounds.width / 2
-                );
-                y = Math.floor(
-                    trayBounds.y -
-                        this.height -
-                        DEFAULT_MARGIN.y +
-                        trayBounds.height / 2
-                );
-                break;
-            case 4:
-                x = Math.floor(
-                    trayBounds.x -
-                        this.width -
-                        DEFAULT_MARGIN.x +
-                        trayBounds.width / 2
-                );
-                y = Math.floor(
-                    trayBounds.y -
-                        this.height -
-                        DEFAULT_MARGIN.y +
-                        trayBounds.height / 2
-                );
-                break;
-        }
-        return { x: x, y: y };
     }
 
     hideSwitcher(): void {

@@ -185,3 +185,7 @@ function sendSizeChanged() {
         height: switcherSize.height,
     });
 }
+
+window.ipc.on('onShown', () => {
+    input.select();
+});

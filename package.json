@@ -5,7 +5,7 @@
     "main": ".webpack/main",
     "scripts": {
         "start": "cross-env NODE_ENV=development electron-forge start",
-        "make": "electron-forge make",
+        "build": "electron-forge make",
         "ts": "tsc",
         "lint": "eslint -c .eslintrc --ext .ts ./src"
     },
