@@ -1,11 +1,13 @@
 import fs from 'fs';
 
 import { getConfigPath } from './paths';
+import { init as initConfigSync } from './ConfigSync';
 
 export type Link = {
     title: string;
     url: string;
     faviconUrl: string;
+    updateTs: number;
 };
 
 export class Config {
@@ -18,6 +20,17 @@ export class Config {
     }
     init(): void {
         const configPath = getConfigPath();
+
+        initConfigSync({
+            getLinksFromTimestamp: (startTimestamp) => {
+                return this.links.filter(
+                    (link) => link.updateTs >= startTimestamp
+                );
+            },
+            getLinks: () => {
+                return this.links;
+            },
+        });
 
         if (!fs.existsSync(configPath)) {
             fs.closeSync(fs.openSync(configPath, 'w'));
@@ -75,13 +88,38 @@ export class Config {
 
         const nextLinks = links;
 
+        // const changes: LinkChange[] = [];
+
+        const currentTime = Date.now();
+
         newLinks.forEach((newLink) => {
             if (existingLinkMap[newLink.url] != null) {
-                nextLinks[existingLinkMap[newLink.url]].title = newLink.title;
+                const currentLink = links[existingLinkMap[newLink.url]];
+                if (currentLink.title !== newLink.title) {
+                    // changes.push({
+                    //     url: currentLink.url,
+                    //     updateFlag: UpdateFlag.UPDATED,
+                    //     newTitle: newLink.title,
+                    //     timestamp: currentTime,
+                    // });
+
+                    // currentLink.updateFlag = UpdateFlag.UPDATED;
+                    currentLink.updateTs = currentTime;
+                    currentLink.title = newLink.title;
+                }
             } else {
+                // changes.push({
+                //     url: newLink.url,
+                //     updateFlag: UpdateFlag.ADDED,
+                //     title: newLink.title,
+                //     timestamp: currentTime,
+                // });
+                // newLink.updateFlag = UpdateFlag.ADDED;
                 nextLinks.push(newLink);
             }
         });
+
+        // console.log('changes:', changes);
 
         return nextLinks;
     }

@@ -31,6 +31,10 @@ export function getConfigPath(): string {
     return app.getPath('userData') + '/config.json';
 }
 
+export function getPendingChangesPath(): string {
+    return app.getPath('userData') + '/pendingChanges.json';
+}
+
 export function getGoogleChromeBookmarksPath(): string {
     switch (process.platform) {
         case 'darwin': {
