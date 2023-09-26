@@ -1,13 +1,4 @@
-import {
-    BrowserWindow,
-    globalShortcut,
-    ipcMain,
-    shell,
-    screen,
-    app,
-} from 'electron';
-
-import { TrayController } from 'src/main/Tray/TrayController';
+import { BrowserWindow, globalShortcut, ipcMain, shell, app } from 'electron';
 
 import { logger } from '../logger';
 import { Config } from '../Config';
@@ -21,10 +12,7 @@ export class Switcher {
     width = 200;
     height = 300;
 
-    constructor(
-        private trayController: TrayController,
-        private config: Config
-    ) {
+    constructor(private config: Config) {
         this.switcherWindow = null;
     }
 
@@ -97,6 +85,11 @@ export class Switcher {
         ipcMain.on('link-clicked', (event, link) => {
             shell.openExternal(link);
             this.switcherWindow?.hide();
+        });
+
+        ipcMain.on('delete-link', (event, link) => {
+            console.log('deleting link:', link);
+            this.config.deleteLink(link);
         });
 
         ipcMain.on('size-changed', (event, size) => {

@@ -6,7 +6,6 @@ import { Switcher } from './Switcher/Switcher';
 import { logger } from './logger';
 import { getConfigPath } from './paths';
 import { Config } from './Config';
-import './ConfigSync';
 
 process.on('uncaughtException', (err: Error) => {
     logger.error('uncaughtException', err);
@@ -33,7 +32,7 @@ app.whenReady().then(() => {
     const trayController = new TrayController(config);
     trayController.init();
 
-    const switcher = new Switcher(trayController, config);
+    const switcher = new Switcher(config);
     switcher.init();
 });
 

@@ -42,7 +42,9 @@ const input = document.getElementById('input') as HTMLInputElement;
 
 let focusState = 0;
 
-document.addEventListener('keydown', (event) => {
+const isMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0;
+
+document.addEventListener('keydown', (event: KeyboardEvent) => {
     if (event.key === 'ArrowDown') {
         event.preventDefault();
         focusState++;
@@ -63,6 +65,30 @@ document.addEventListener('keydown', (event) => {
             input.value = '';
         } else {
             window.ipc.send('escape-clicked');
+        }
+    } else {
+        console.log('here:', event.key);
+        if (
+            (isMac && event.key === 'Backspace' && event.metaKey) ||
+            event.key === 'Delete'
+        ) {
+            console.log('Delete item');
+            if (
+                focusState > -1 &&
+                focusState < dropdownParent.children.length
+            ) {
+                const url =
+                    dropdownParent.children[focusState].getAttribute(
+                        'data-url'
+                    );
+
+                dropdownParent.children[focusState].remove();
+                updateSelection();
+                window.ipc.send('delete-link', url);
+
+                event.stopPropagation();
+                event.preventDefault();
+            }
         }
     }
 });

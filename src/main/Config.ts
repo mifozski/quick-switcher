@@ -53,6 +53,19 @@ export class Config {
         this.listeners.forEach((listener) => listener());
     }
 
+    deleteLink(linkUrl: string): void {
+        const linkToDelete = this.links.find((link) => link.url === linkUrl);
+        if (!linkToDelete) {
+            return;
+        }
+        // linkToDelete.updateFlag = UpdateFlag.REMOVED;
+        // linkToDelete.updateTs = Date.now();
+
+        fs.writeFileSync(getConfigPath(), JSON.stringify(this.config, null, 2));
+
+        this.listeners.forEach((listener) => listener());
+    }
+
     private getLinksWithoutDuplicates(links: Link[], newLinks: Link[]): Link[] {
         const existingLinkMap: { [url: string]: number } = {};
 
