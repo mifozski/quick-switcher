@@ -49,12 +49,27 @@
         "typescript": "^4.8.3"
     },
     "dependencies": {
+        "@chainsafe/libp2p-gossipsub": "^10.1.0",
+        "@chainsafe/libp2p-noise": "^13.0.1",
+        "@chainsafe/libp2p-yamux": "^5.0.0",
+        "@libp2p/mdns": "^9.0.10",
+        "@libp2p/peer-id": "^3.0.3",
+        "@libp2p/peer-id-factory": "^3.0.5",
+        "@libp2p/tcp": "^8.0.9",
+        "@libp2p/websockets": "^7.0.9",
         "dat-swarm-defaults": "^1.0.3",
         "discovery-swarm": "^6.1.0",
         "fuse.js": "^6.6.2",
         "get-port": "^7.0.0",
+        "ipfs-pubsub-room": "^3.0.0",
+        "libp2p": "^0.46.13",
+        "multiaddr": "^10.0.1",
+        "peer-id": "^0.16.0",
         "portfinder": "^1.0.32",
         "shell": "^0.5.1",
-        "winston": "^3.10.0"
+        "socket.io-stream": "^0.9.1",
+        "winston": "^3.10.0",
+        "y-libp2p": "^0.0.2",
+        "yjs": "^13.6.8"
     }
 }

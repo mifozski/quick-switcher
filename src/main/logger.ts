@@ -7,7 +7,7 @@ const consoleTransport = new winston.transports.File({
     filename: 'console.log',
 });
 const myWinstonOptions = {
-    transports: [consoleTransport],
+    transports: [consoleTransport, new winston.transports.Console()],
 };
 
 export const logger = winston.createLogger(myWinstonOptions);

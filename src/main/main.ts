@@ -15,7 +15,9 @@ process.on('unhandledRejection', (reason: unknown) => {
     logger.error('unhandledRejection', reason);
 });
 
-app.whenReady().then(() => {
+(async function setup() {
+    await app.whenReady();
+
     if (app.isPackaged) {
         const configPath = getConfigPath();
         console.log('isPackaged:', app.isPackaged);
@@ -27,14 +29,14 @@ app.whenReady().then(() => {
     }
 
     const config = new Config();
-    config.init();
+    await config.init();
 
     const trayController = new TrayController(config);
     trayController.init();
 
     const switcher = new Switcher(config);
     switcher.init();
-});
+})();
 
 app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') {

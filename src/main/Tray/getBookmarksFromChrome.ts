@@ -43,7 +43,7 @@ function collectLinks(
             title: bookmark.name,
             url: bookmark.url,
             faviconUrl,
-            updateTs: currentTime,
+            updated: currentTime,
         });
     } else {
         bookmark.children.forEach((childBookmark) =>

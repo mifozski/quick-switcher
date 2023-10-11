@@ -1,13 +1,13 @@
 import fs from 'fs';
 
 import { getConfigPath } from './paths';
-import { init as initConfigSync } from './ConfigSync';
+import { ConfigSync } from './ConfigSync/ConfigSync';
 
 export type Link = {
     title: string;
     url: string;
     faviconUrl: string;
-    updateTs: number;
+    updated: number;
 };
 
 export class Config {
@@ -18,13 +18,14 @@ export class Config {
     constructor() {
         this.config = [];
     }
-    init(): void {
+    async init(): Promise<void> {
         const configPath = getConfigPath();
 
-        initConfigSync({
+        const configSync = new ConfigSync();
+        await configSync.init({
             getLinksFromTimestamp: (startTimestamp) => {
                 return this.links.filter(
-                    (link) => link.updateTs >= startTimestamp
+                    (link) => link.updated >= startTimestamp
                 );
             },
             getLinks: () => {
@@ -72,7 +73,7 @@ export class Config {
             return;
         }
         // linkToDelete.updateFlag = UpdateFlag.REMOVED;
-        // linkToDelete.updateTs = Date.now();
+        // linkToDelete.updated = Date.now();
 
         fs.writeFileSync(getConfigPath(), JSON.stringify(this.config, null, 2));
 
@@ -104,7 +105,7 @@ export class Config {
                     // });
 
                     // currentLink.updateFlag = UpdateFlag.UPDATED;
-                    currentLink.updateTs = currentTime;
+                    currentLink.updated = currentTime;
                     currentLink.title = newLink.title;
                 }
             } else {

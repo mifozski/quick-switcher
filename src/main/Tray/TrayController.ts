@@ -3,17 +3,18 @@ import { logger } from '../logger';
 import { getTrayIconPath } from '../paths';
 import { getBookmarksFromChrome as getBookmarksFromChrome } from './getBookmarksFromChrome';
 import { Config } from '../Config';
+import { testChanges } from '../ConfigSync/ConfigSync';
 
 export class TrayController {
     _tray: Tray;
 
-    constructor(private config: Config) {}
-
-    init(): void {
+    constructor(private config: Config) {
         logger.info('Initializing tray...');
         const iconPath = getTrayIconPath();
-
         this._tray = new Tray(iconPath);
+    }
+
+    init(): void {
         logger.info('Tray initialized');
         const contextMenu = Menu.buildFromTemplate([
             {
@@ -39,6 +40,12 @@ export class TrayController {
                     app.setLoginItemSettings({
                         openAtLogin: args.checked,
                     });
+                },
+            },
+            {
+                label: 'Test change',
+                click: () => {
+                    testChanges();
                 },
             },
             { label: 'Exit', type: 'normal', role: 'quit' },

@@ -1,6 +1,8 @@
 import Fuse from 'fuse.js';
 import { Link } from 'src/main/Config';
 
+import { createLibp2p } from 'libp2p';
+
 window.ipc.send('ready');
 
 sendSizeChanged();
@@ -212,6 +214,9 @@ function sendSizeChanged() {
     });
 }
 
-window.ipc.on('onShown', () => {
+window.ipc.on('onShown', async () => {
     input.select();
+
+    const libp2p = await createLibp2p({ start: true });
+    // libp2p.start();
 });
